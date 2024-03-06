@@ -1,0 +1,17 @@
+chave_autentication=6567856lj
+# Chave de criptografia usada no Success
+CHAVE_CRIPTO=Success2021
+
+ATUALIZACAO_DB_HOST=success.vps-kinghost.net
+ATUALIZACAO_DB_USER=root
+ATUALIZACAO_DB_PASS=success123
+ATUALIZACAO_DB_DATABASE=autualizacao_automatica
+ATUALIZACAO_DB_PORT=3309
+
+# Banco de dados do site da Success, de onde é puxado os registros de conexões
+# do sincronismo dos clientes (tabela cfgw)
+SITE_SUCCESS_DB_HOST=digitalocean.com
+SITE_SUCCESS_DB_NAME=successtestes01
+SITE_SUCCESS_DB_USER=lucas
+SITE_SUCCESS_DB_PASSWORD=senha
+SITE_SUCCESS_DB_PORT=8976
