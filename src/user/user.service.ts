@@ -31,8 +31,6 @@ export class UserService {
 		const usuario = await this.knexConnection.select("*")
 			.from("users").where("email", "=", username)
 			.limit(1);
-			console.log(usuario)
-			console.log("depois")
 		return usuario[0];
 
 	}

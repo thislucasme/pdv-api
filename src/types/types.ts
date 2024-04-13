@@ -75,6 +75,11 @@ export interface QueryPaginationProdutos{
     queryText: string;
     codigoBarras: string;
 }
+export interface QueryPaginationPeriodo{
+  dias: number;
+  startDate: string;
+  endDate:string
+}
 
 export interface QueryPaginationPedido{
   page: number;

@@ -3,7 +3,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/auth/utils/currentUser';
 import { UsuarioBody } from 'src/tdo/usuarioDTO';
 import { ProdutosService } from './produtos.service';
-import { Order, QueryPaginationPedido, QueryPaginationProdutos } from 'src/types/types';
+import { Order, QueryPaginationPedido, QueryPaginationPeriodo, QueryPaginationProdutos } from 'src/types/types';
 import { Response } from 'express';
 @Controller('produtos')
 export class ProdutosController {
@@ -23,7 +23,7 @@ export class ProdutosController {
         page: result.page,
         total: result.total,
       };
-      response.setHeader('Custom-Header', JSON.stringify(customData));
+     // response.setHeader('Custom-Header', JSON.stringify(customData));
       response.send(result.data)
     } catch (e) {
       console.log(e)
@@ -33,20 +33,22 @@ export class ProdutosController {
 
   @UseGuards(JwtAuthGuard)
   @Get("periodo")
-  async getOcorrencia(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationProdutos, @Res() response: Response) {
+  async getOcorrencia(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationPeriodo, @Res() response: Response) {
     // const result = await this.produtosService.getPeriodo(user, query);
     // console.log(result?.length)
     try {
       const result = await this.produtosService.getPeriodo(user, query);
       if (result?.length === 0) {
         response.status(HttpStatus.NO_CONTENT).send();
+      }else{
+        const customData = {
+          page: result.page,
+          total: result.total,
+        };
+       // response.setHeader('Custom-Header', JSON.stringify(customData));
+        response.send(result)
       }
-      const customData = {
-        page: result.page,
-        total: result.total,
-      };
-      response.setHeader('Custom-Header', JSON.stringify(customData));
-      response.send(result)
+ 
     } catch (e) {
       console.log(e)
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).send(e);
@@ -70,7 +72,7 @@ export class ProdutosController {
   }
   @UseGuards(JwtAuthGuard)
   @Get("total-vendas")
-  async getTotals(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationProdutos, @Res() response: Response) {
+  async getTotals(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationPeriodo, @Res() response: Response) {
     // const result = await this.produtosService.getPeriodo(user, query);
     // console.log(result?.length)
     try {

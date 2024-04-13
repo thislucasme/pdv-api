@@ -7,10 +7,10 @@ const knexProvider = {
     const connection = Knex({
       client: 'mysql2',
       connection: {
-        host: 'pdv-teste.mysql.uhserver.com',
-        user: 'usuarioremoto',
-        password: 'aEVV9ZvuzRb!MCy@',
-        database: 'pdv_teste',
+        host: '127.0.0.1',
+        user: 'root',
+        password: '14209826',
+        database: 'pdv_test',
         port: 3306
     },
     });

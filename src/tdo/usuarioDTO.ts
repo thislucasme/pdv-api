@@ -15,5 +15,6 @@ export type UsuarioCredenciais = {
 export type UsuarioBody = {
 	userId: string,
 	username: string,
-	name: number
+	name: number,
+	uuid: string
 }

@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/auth/utils/currentUser';
 import { UsuarioBody } from 'src/tdo/usuarioDTO';
-import { QueryPaginationProdutos } from 'src/types/types';
+import { QueryPaginationPeriodo, QueryPaginationProdutos } from 'src/types/types';
 import { PedidoService } from './pedido.service';
 
 @Controller("pedido")
@@ -11,9 +11,10 @@ export class PedidoController {
     constructor(private pedidoService:PedidoService){}
     @UseGuards(JwtAuthGuard)
     @Get("total-lucro")
-    async getTotals(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationProdutos, @Res() response: Response) {
+    async getTotals(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationPeriodo, @Res() response: Response) {
       // const result = await this.produtosService.getPeriodo(user, query);
       // console.log(result?.length)
+      console.log(user)
       try {
         const result = await this.pedidoService.getLucroTotal(user, query);
         // if (result?.length === 0) {
