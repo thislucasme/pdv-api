@@ -14,7 +14,12 @@ async function bootstrap() {
         .addBearerAuth()
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
-    swagger_1.SwaggerModule.setup('api', app, document);
+    swagger_1.SwaggerModule.setup('api', app, document, {
+        customfavIcon: "src/resources/logologo.jpeg",
+        swaggerOptions: {
+            backgroundColor: '#000000'
+        }
+    });
     console.log("waiting: 3066");
     await app.listen(3066);
 }

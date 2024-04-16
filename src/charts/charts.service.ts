@@ -146,7 +146,7 @@ export class ChartsService {
           .from('order')
           .select(this.knexConnection.raw('DATE_FORMAT(data_venda, "%d-%m-%Y") AS data'))
           .count('* as quantidade_pedidos')
-          .where('data_venda', '>=', this.knexConnection.raw(`DATE_SUB(CURDATE(), INTERVAL ${query.dias} DAY)`))
+          .where('data_venda', '>=', this.knexConnection.raw(`DATE_SUB(CURDATE(), INTERVAL ${7} DAY)`))
           .groupBy(this.knexConnection.raw('DATE(data_venda), data_venda'))
           .orderBy('data_venda', 'asc'); // Ordenar da menor data para a maior
     
