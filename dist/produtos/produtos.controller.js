@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const currentUser_1 = require("../auth/utils/currentUser");
 const produtos_service_1 = require("./produtos.service");
+const types_1 = require("../types/types");
 let ProdutosController = class ProdutosController {
     constructor(produtosService) {
         this.produtosService = produtosService;
@@ -191,7 +192,7 @@ __decorate([
     __param(1, (0, common_1.Query)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.QueryPaginationProdutos, Object]),
     __metadata("design:returntype", Promise)
 ], ProdutosController.prototype, "pagination", null);
 __decorate([
@@ -211,7 +212,7 @@ __decorate([
     __param(1, (0, common_1.Query)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.QueryPaginationProdutos, Object]),
     __metadata("design:returntype", Promise)
 ], ProdutosController.prototype, "getPagamentos", null);
 __decorate([
@@ -237,7 +238,7 @@ __decorate([
     __param(1, (0, common_1.Query)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.QueryPaginationProdutos, Object]),
     __metadata("design:returntype", Promise)
 ], ProdutosController.prototype, "singleProduct", null);
 __decorate([
@@ -247,7 +248,7 @@ __decorate([
     __param(1, (0, common_1.Query)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.QueryPaginationProdutos, Object]),
     __metadata("design:returntype", Promise)
 ], ProdutosController.prototype, "singlePedido", null);
 __decorate([
@@ -287,7 +288,7 @@ __decorate([
     __param(1, (0, common_1.Query)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.QueryPaginationProdutos, Object]),
     __metadata("design:returntype", Promise)
 ], ProdutosController.prototype, "paginationPedido", null);
 ProdutosController = __decorate([

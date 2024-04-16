@@ -4,8 +4,11 @@ import { IsPublic } from './decorators/is-public.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest';
 import { Knex } from 'knex';
+import { ApiTags } from '@nestjs/swagger';
+import { UsuarioLogin, UsuarioTDO } from 'src/tdo/usuarioDTO';
 
 @Controller()
+@ApiTags('login')
 export class AuthController {
 
 	constructor(private readonly authService: AuthService,
@@ -15,12 +18,8 @@ export class AuthController {
 	@Post("login")
 	@HttpCode(HttpStatus.OK)
 	@UseGuards(LocalAuthGuard)
-	login(@Request() req: AuthRequest) {
-		return this.authService.login(req.user);
-		
-	}
-	@Get('teste')
-	async get(){
-		return {a: 3}
+	login(@Request() user: UsuarioLogin) {
+		return this.authService.login(user);
+
 	}
 }

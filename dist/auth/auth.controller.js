@@ -17,16 +17,15 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const local_auth_guard_1 = require("./guards/local-auth.guard");
 const knex_1 = require("knex");
+const swagger_1 = require("@nestjs/swagger");
+const usuarioDTO_1 = require("../tdo/usuarioDTO");
 let AuthController = class AuthController {
     constructor(authService, knexConnection) {
         this.authService = authService;
         this.knexConnection = knexConnection;
     }
-    login(req) {
-        return this.authService.login(req.user);
-    }
-    async get() {
-        return { a: 3 };
+    login(user) {
+        return this.authService.login(user);
     }
 };
 __decorate([
@@ -35,17 +34,12 @@ __decorate([
     (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [usuarioDTO_1.UsuarioLogin]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
-__decorate([
-    (0, common_1.Get)('teste'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "get", null);
 AuthController = __decorate([
     (0, common_1.Controller)(),
+    (0, swagger_1.ApiTags)('login'),
     __param(1, (0, common_1.Inject)('KnexConnection')),
     __metadata("design:paramtypes", [auth_service_1.AuthService, Function])
 ], AuthController);

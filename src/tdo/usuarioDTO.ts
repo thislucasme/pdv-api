@@ -1,9 +1,28 @@
-export type UsuarioTDO = {
-	name: string,
-	email: string,
-	id: number,
-	senha: string,
-	uuid: string,
+import { ApiProperty } from "@nestjs/swagger"
+
+export class UsuarioTDO {
+	name: string;
+	@ApiProperty(
+		{
+		  description: 'Email'
+		}
+	  )
+	email: string;
+	id: number;
+	@ApiProperty(
+		{
+		  description: 'senha'
+		}
+	  )
+	senha: string;
+	uuid: string;
+}
+export class UsuarioLogin {
+	name: string;
+	@ApiProperty({ description: 'Email do usuário' })
+	email: string;
+	@ApiProperty({ description: 'Email do usuário' })
+	senha: string;
 }
 export type UsuarioCredenciais = {
 	nome: string,

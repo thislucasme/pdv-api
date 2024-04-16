@@ -14,14 +14,10 @@ const produtos_module_1 = require("./produtos/produtos.module");
 const database_app_module_1 = require("./database/database-app.module");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const auth_module_1 = require("./auth/auth.module");
 const configuracao_1 = require("./config/configuracao");
-const site_success_database_service_1 = require("./database/site-success-database.service");
 const user_module_1 = require("./user/user.module");
 const platform_express_1 = require("@nestjs/platform-express");
-const database_service_1 = require("./database/database.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -41,12 +37,6 @@ AppModule = __decorate([
                 load: [configuracao_1.default],
                 isGlobal: true,
             }),
-        ],
-        controllers: [app_controller_1.AppController],
-        providers: [
-            site_success_database_service_1.SiteSuccessDatabaseService,
-            database_service_1.DatabaseService,
-            app_service_1.AppService,
         ],
     })
 ], AppModule);

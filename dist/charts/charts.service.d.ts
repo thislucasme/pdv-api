@@ -1,14 +1,14 @@
 import { Knex } from 'knex';
 import { DatabaseService } from 'src/database/database.service';
 import { UsuarioBody } from 'src/tdo/usuarioDTO';
-import { QueryPaginationProdutos } from 'src/types/types';
+import { FormaPagamentoTdo, LucroTotalTdo, LucrosEmVendasTDO, QueryPaginationPeriodo } from 'src/types/types';
 import { UserService } from 'src/user/user.service';
 export declare class ChartsService {
     private readonly knexConnection;
     private testeKnex;
     private userService;
     constructor(knexConnection: Knex, testeKnex: DatabaseService, userService: UserService);
-    getPaymentMethodCounts(user: UsuarioBody, query: QueryPaginationProdutos): Promise<{
+    getPaymentMethodCounts(user: UsuarioBody, query: FormaPagamentoTdo): Promise<{
         fill: string;
         timeout: any;
         wrap: any;
@@ -43,4 +43,16 @@ export declare class ChartsService {
         finally: any;
         [Symbol.toStringTag]: any;
     }[]>;
+    getTotals(user: UsuarioBody, query: LucrosEmVendasTDO): Promise<{
+        total_venda: any;
+        total_produtos: any;
+        quantidade_produtos: any;
+    }>;
+    getLucroTotal(user: UsuarioBody, query: LucroTotalTdo): Promise<{
+        total_produtos: any;
+        total_bruto: any;
+        lucro: number;
+        porcentagem_lucro: number;
+    }>;
+    getPeriodo(user: UsuarioBody, query: QueryPaginationPeriodo): Promise<any>;
 }

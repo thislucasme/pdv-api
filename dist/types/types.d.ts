@@ -66,14 +66,26 @@ export interface OptionData {
     label: string;
     value: string;
 }
-export interface QueryPaginationProdutos {
+export declare class QueryPaginationProdutos {
     page: number;
     limit: number;
     queryText: string;
     codigoBarras: string;
 }
+export declare class FormaPagamentoTdo {
+    startDate: string;
+    endDate: string;
+}
 export interface QueryPaginationPeriodo {
     dias: number;
+    startDate: string;
+    endDate: string;
+}
+export declare class LucroTotalTdo {
+    startDate: string;
+    endDate: string;
+}
+export declare class LucrosEmVendasTDO {
     startDate: string;
     endDate: string;
 }

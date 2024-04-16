@@ -11,7 +11,7 @@ async function bootstrap() {
         .setTitle('PDV - App')
         .setDescription('Api para aplicação pdv')
         .setVersion('1.0')
-        .addTag('cats')
+        .addBearerAuth()
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
