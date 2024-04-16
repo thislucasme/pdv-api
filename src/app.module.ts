@@ -1,3 +1,4 @@
+import { ChartsModule } from './charts/charts.module';
 import { PedidoModule } from './pedido/pedido.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { ProdutosModule } from './produtos/produtos.module';
@@ -16,6 +17,7 @@ import { DatabaseService } from './database/database.service';
 
 @Module({
   imports: [
+    ChartsModule,
     PedidoModule,
     ClienteModule,
     ProdutosModule,

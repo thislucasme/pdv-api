@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
+const charts_module_1 = require("./charts/charts.module");
 const pedido_module_1 = require("./pedido/pedido.module");
 const cliente_module_1 = require("./cliente/cliente.module");
 const produtos_module_1 = require("./produtos/produtos.module");
@@ -26,6 +27,7 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            charts_module_1.ChartsModule,
             pedido_module_1.PedidoModule,
             cliente_module_1.ClienteModule,
             produtos_module_1.ProdutosModule,
