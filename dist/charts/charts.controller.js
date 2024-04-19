@@ -29,7 +29,9 @@ let ChartsController = class ChartsController {
             if ((result === null || result === void 0 ? void 0 : result.length) === 0) {
                 response.status(common_1.HttpStatus.NO_CONTENT).send();
             }
-            response.send(result);
+            else {
+                response.send(result);
+            }
         }
         catch (e) {
             console.log(e);

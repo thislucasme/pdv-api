@@ -20,8 +20,10 @@ export class ChartsController {
             const result = await this.chartsServico.getPaymentMethodCounts(user, query);
             if (result?.length === 0) {
                 response.status(HttpStatus.NO_CONTENT).send();
+            }else{
+              response.send(result)
             }
-            response.send(result)
+            
         } catch (e) {
             console.log(e)
             response.status(HttpStatus.INTERNAL_SERVER_ERROR).send(e);

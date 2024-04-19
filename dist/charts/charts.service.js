@@ -25,6 +25,8 @@ let ChartsService = class ChartsService {
     }
     async getPaymentMethodCounts(user, query) {
         try {
+            const userQuery = this.knexConnection('users').where('email', '=', user.username);
+            const [usuario] = await userQuery;
             const result = await this.knexConnection
                 .select(this.knexConnection.raw("CONCAT(forma_pagamento, ' - ', CASE forma_pagamento " +
                 "WHEN 1 THEN 'dinheiro' " +
@@ -34,6 +36,8 @@ let ChartsService = class ChartsService {
                 .count('* as quantidade')
                 .from('order')
                 .whereNotNull('forma_pagamento')
+                .andWhere("userId", usuario.uuid)
+                .whereRaw(`DATE(data_venda) >= '${query.startDate}' AND DATE(data_venda) <= '${query.endDate}'`)
                 .groupBy('forma_pagamento')
                 .orderBy('forma_pagamento');
             const dados = result.map((item, index) => (Object.assign(Object.assign({}, item), { fill: ['#ABE16D', '#E16D84', '#926DE1'][index] })));
@@ -49,7 +53,6 @@ let ChartsService = class ChartsService {
             const result = await this.knexConnection.transaction(async (trx) => {
                 const userQuery = trx('users').where('email', '=', user.username);
                 const [usuario] = await userQuery;
-                console.log(query);
                 const totalVendaQuery = trx('pdv_test.order as A')
                     .join('produto_order as B', 'B.orderId', '=', 'A.uuid')
                     .join('products as C', 'C.uuid', '=', 'B.uid')
