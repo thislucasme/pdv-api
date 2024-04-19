@@ -59,9 +59,6 @@ export class ChartsService {
           .select(trx.raw("ifnull(sum(C.quantidade * C.preco_venda), 0) as total_venda"))
           .whereRaw(`DATE(A.data_venda) >= '${query.startDate}' AND DATE(A.data_venda) <= '${query.endDate}'`)
           .where('A.userId', '=', usuario.uuid);
-
-        console.log(totalVendaQuery.toQuery())
-
         const totalProdutosQuery = trx('products as po')
           .select(trx.raw('SUM(po.quantidade * po.preco_venda) AS total_produtos'))
           .where("po.user_uuid", "=", `${usuario.uuid}`);
@@ -100,7 +97,6 @@ export class ChartsService {
   async getLucroTotal(user: UsuarioBody, query: LucroTotalTdo) {
     try {
       const result = await this.knexConnection.transaction(async (trx) => {
-        console.log(query.startDate, query.endDate)
         const userQuery = trx('users').where('email', '=', user.username);
         const [usuario] = await userQuery;
 
@@ -145,12 +141,16 @@ export class ChartsService {
     }
   }
   async getPeriodo(user: UsuarioBody, query: QueryPaginationPeriodo) {
+    const {startDate, endDate} = query;
+    const userQuery = this.knexConnection('users').where('email', '=', user.username);
+    const [usuario] = await userQuery;
     const result = await this.knexConnection
       .select()
       .from('order')
       .select(this.knexConnection.raw('DATE_FORMAT(data_venda, "%d-%m-%Y") AS data'))
       .count('* as quantidade_pedidos')
-      .where('data_venda', '>=', this.knexConnection.raw(`DATE_SUB(CURDATE(), INTERVAL ${7} DAY)`))
+      .andWhere("userId", usuario.uuid)
+      .whereRaw(`DATE(data_venda) >= '${query.startDate}' AND DATE(data_venda) <= '${query.endDate}'`)
       .groupBy(this.knexConnection.raw('DATE(data_venda), data_venda'))
       .orderBy('data_venda', 'asc'); // Ordenar da menor data para a maior
 

@@ -18,11 +18,7 @@ export class ChartsController {
     async getPagamentos(@CurrentUser() user: UsuarioBody, @Query() query: FormaPagamentoTdo, @Res() response: Response) {
         try {
             const result = await this.chartsServico.getPaymentMethodCounts(user, query);
-            if (result?.length === 0) {
-                response.status(HttpStatus.NO_CONTENT).send();
-            }else{
-              response.send(result)
-            }
+            response.send(result)
             
         } catch (e) {
             console.log(e)
@@ -34,13 +30,8 @@ export class ChartsController {
     @ApiBearerAuth()
     @Get("total-vendas")
     async getTotals(@CurrentUser() user: UsuarioBody, @Query() query: LucrosEmVendasTDO, @Res() response: Response) {
-        // const result = await this.produtosService.getPeriodo(user, query);
-        // console.log(result?.length)
         try {
             const result = await this.chartsServico.getTotals(user, query);
-            // if (result?.length === 0) {
-            //   response.status(HttpStatus.NO_CONTENT).send();
-            // }
             response.send(result)
         } catch (e) {
             console.log(e)
@@ -52,13 +43,8 @@ export class ChartsController {
     @ApiBearerAuth()
     @Get("total-lucro")
     async getLucroTotal(@CurrentUser() user: UsuarioBody, @Query() query: LucroTotalTdo, @Res() response: Response) {
-        // const result = await this.produtosService.getPeriodo(user, query);
-        // console.log(result?.length)
         try {
             const result = await this.chartsServico.getLucroTotal(user, query);
-            // if (result?.length === 0) {
-            //   response.status(HttpStatus.NO_CONTENT).send();
-            // }
             response.send(result)
         } catch (e) {
             console.log(e)
@@ -70,20 +56,9 @@ export class ChartsController {
     @UseGuards(JwtAuthGuard)
     @Get("vendas")
     async getOcorrencia(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationPeriodo, @Res() response: Response) {
-      // const result = await this.produtosService.getPeriodo(user, query);
-      // console.log(result?.length)
       try {
         const result = await this.chartsServico.getPeriodo(user, query);
-        if (result?.length === 0) {
-          response.status(HttpStatus.NO_CONTENT).send();
-        }else{
-          const customData = {
-            page: result.page,
-            total: result.total,
-          };
-         // response.setHeader('Custom-Header', JSON.stringify(customData));
-          response.send(result)
-        }
+        response.send(result)
    
       } catch (e) {
         console.log(e)

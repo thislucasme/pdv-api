@@ -26,12 +26,7 @@ let ChartsController = class ChartsController {
     async getPagamentos(user, query, response) {
         try {
             const result = await this.chartsServico.getPaymentMethodCounts(user, query);
-            if ((result === null || result === void 0 ? void 0 : result.length) === 0) {
-                response.status(common_1.HttpStatus.NO_CONTENT).send();
-            }
-            else {
-                response.send(result);
-            }
+            response.send(result);
         }
         catch (e) {
             console.log(e);
@@ -61,16 +56,7 @@ let ChartsController = class ChartsController {
     async getOcorrencia(user, query, response) {
         try {
             const result = await this.chartsServico.getPeriodo(user, query);
-            if ((result === null || result === void 0 ? void 0 : result.length) === 0) {
-                response.status(common_1.HttpStatus.NO_CONTENT).send();
-            }
-            else {
-                const customData = {
-                    page: result.page,
-                    total: result.total,
-                };
-                response.send(result);
-            }
+            response.send(result);
         }
         catch (e) {
             console.log(e);
