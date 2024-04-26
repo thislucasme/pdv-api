@@ -99,6 +99,7 @@ __decorate([
 ], ChartsController.prototype, "getLucroTotal", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Get)("vendas"),
     __param(0, (0, currentUser_1.CurrentUser)()),
     __param(1, (0, common_1.Query)()),

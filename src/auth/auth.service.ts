@@ -17,12 +17,13 @@ export class AuthService {
 	) { }
 
 	login(user: any): UserToken {
+		console.log(user.user)
 		//transforma o user em um JWT
 		const payload: UserPayload = {
-			sub: user.id,
-			email: user.email,
-			name: user.name,
-			uuid: user.uuid
+			sub: user.user.id,
+			email: user.user.email,
+			name: user.user.name,
+			uuid: user.user.uuid
 		};
 	
 		const jwtToken = this.jwtService.sign(payload);

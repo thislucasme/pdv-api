@@ -6,12 +6,8 @@ export declare class ClienteService {
     private readonly knexConnection;
     private userService;
     constructor(knexConnection: Knex, userService: UserService);
-    criarClienteSistema(user: UsuarioBody, body: UsuarioSistema): Promise<{
-        success: boolean;
-    }>;
-    atualizarClienteSistema(user: UsuarioBody, body: UsuarioSistema): Promise<{
-        success: boolean;
-    }>;
+    criarClienteSistema(user: UsuarioBody, body: UsuarioSistema): Promise<UsuarioSistema>;
+    atualizarClienteSistema(user: UsuarioBody, body: UsuarioSistema): Promise<UsuarioSistema>;
     deletarUsuarioSistema(user: UsuarioBody, id_hash: string): Promise<{
         success: boolean;
     }>;

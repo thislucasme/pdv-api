@@ -12,8 +12,10 @@ export class ProdutosController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async pagination(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationProdutos, @Res() response: Response) {
+    console.log(user)
+    console.log("===========")
     const result = await this.produtosService.getProducts(user, query);
-    console.log(result)
+
     try {
       const result = await this.produtosService.getProducts(user, query);
       if (result?.data.length === 0) {
@@ -23,7 +25,7 @@ export class ProdutosController {
         page: result.page,
         total: result.total,
       };
-     // response.setHeader('Custom-Header', JSON.stringify(customData));
+     response.setHeader('Custom-Header', JSON.stringify(customData));
       response.send(result.data)
     } catch (e) {
       console.log(e)
@@ -36,6 +38,7 @@ export class ProdutosController {
   async getOcorrencia(@CurrentUser() user: UsuarioBody, @Query() query: QueryPaginationPeriodo, @Res() response: Response) {
     // const result = await this.produtosService.getPeriodo(user, query);
     // console.log(result?.length)
+
     try {
       const result = await this.produtosService.getPeriodo(user, query);
       if (result?.length === 0) {

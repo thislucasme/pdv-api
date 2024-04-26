@@ -141,19 +141,22 @@ export class ChartsService {
     }
   }
   async getPeriodo(user: UsuarioBody, query: QueryPaginationPeriodo) {
-    const {startDate, endDate} = query;
+    const { startDate, endDate } = query;
     const userQuery = this.knexConnection('users').where('email', '=', user.username);
     const [usuario] = await userQuery;
+  
     const result = await this.knexConnection
-      .select()
+      .select(
+        this.knexConnection.raw('DATE(data_venda) AS data'),
+        this.knexConnection.raw('COUNT(*) AS quantidade_pedidos')
+      )
       .from('order')
-      .select(this.knexConnection.raw('DATE_FORMAT(data_venda, "%d-%m-%Y") AS data'))
-      .count('* as quantidade_pedidos')
-      .andWhere("userId", usuario.uuid)
-      .whereRaw(`DATE(data_venda) >= '${query.startDate}' AND DATE(data_venda) <= '${query.endDate}'`)
-      .groupBy(this.knexConnection.raw('DATE(data_venda), data_venda'))
-      .orderBy('data_venda', 'asc'); // Ordenar da menor data para a maior
-
+      .andWhere('userId', usuario.uuid)
+      .andWhereBetween('data_venda', [startDate, endDate])
+      .groupByRaw('DATE(data_venda)')
+      .orderByRaw('DATE(data_venda) ASC');
+  
     return result;
   }
+  
 }

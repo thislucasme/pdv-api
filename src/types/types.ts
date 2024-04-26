@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsEmail, IsEmpty, IsNotEmpty, isNotEmpty } from "class-validator";
 
 export interface Product {
   id: number;
@@ -100,7 +101,7 @@ export class FormaPagamentoTdo {
   endDate: string;
 }
 export interface QueryPaginationPeriodo {
-  
+
   dias: number;
   startDate: string;
   endDate: string
@@ -147,17 +148,70 @@ export interface QueryPaginationPedido {
   codigoBarras: string;
   uuid?: string;
 }
-export interface UsuarioSistema {
-  usuario_uuid: string;
-  id_hash?: string | null;
-  nome?: string | null;
-  cpf?: string | null;
-  email?: string | null;
-  telefone?: string | null;
-  data_nascimento?: string | null;
-  rg_ie?: string | null;
-  observacao?: string | null;
+export class UsuarioSistema {
+ 
+  usuario_uuid: string | null;
+  id_hash: string | null;
+  @ApiProperty(
+    {
+      description: 'Nome',
+      default: "Marcelo",
+    }
+  )
+  @IsNotEmpty()
+  nome: string | null;
+  @ApiProperty(
+    {
+      description: 'CPF',
+      default: "00000000000",
+    }
+  )
+  @IsNotEmpty()
+  cpf: string | null;
+  @ApiProperty(
+    {
+      description: 'Email',
+      default: "email@gmail.com",
+
+    }
+  )
+  
+  email: string | null;
+  @ApiProperty(
+    {
+      description: 'Telefone',
+      default: "0000000000",
+    }
+  )
+  telefone: string | null;
+  @ApiProperty(
+    {
+      description: 'Nascimento',
+      default: "1999-09-13",
+    }
+  )
+  data_nascimento: string | null;
+  @ApiProperty(
+    {
+      description: 'RG',
+      default: "GD000000",
+    }
+  )
+  rg_ie: string | null;
+  @ApiProperty(
+    {
+      description: 'Nascimento',
+      default: "",
+    }
+  )
+  observacao: string | null;
 }
-export interface UsuarioSistemaQuery {
+export class UsuarioSistemaQuery {
+  @ApiProperty(
+    {
+      description: 'Id do Cliente',
+      default: "ebe10e4d-5df7-4071-b90e-aeaf401ccdd7",
+    }
+  )
   id_hash: string;
 }

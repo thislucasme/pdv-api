@@ -17,48 +17,23 @@ const common_1 = require("@nestjs/common");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const currentUser_1 = require("../auth/utils/currentUser");
 const cliente_service_1 = require("./cliente.service");
+const types_1 = require("../types/types");
+const swagger_1 = require("@nestjs/swagger");
+const exception_filter_1 = require("../exception-filter/exception-filter");
 let ClienteController = class ClienteController {
     constructor(clienteService) {
         this.clienteService = clienteService;
     }
-    async criarUsuarioSistema(user, response, body) {
-        try {
-            const result = await this.clienteService.criarClienteSistema(user, body);
-            response.send(result);
-        }
-        catch (error) {
-            console.error("Erro ao criar usuário no sistema:", error);
-            response.status(common_1.HttpStatus.INTERNAL_SERVER_ERROR).send({
-                message: "Erro ao criar usuário no sistema"
-            });
-        }
+    async criarUsuarioSistema(user, body) {
+        return await this.clienteService.criarClienteSistema(user, body);
     }
-    async atualizarUsuarioSistema(user, response, body) {
-        try {
-            const result = await this.clienteService.atualizarClienteSistema(user, body);
-            response.send(result);
-        }
-        catch (error) {
-            console.error("Erro ao atualizar usuário no sistema:", error);
-            response.status(common_1.HttpStatus.INTERNAL_SERVER_ERROR).send({
-                message: "Erro ao atualizar usuário no sistema"
-            });
-        }
+    async atualizarUsuarioSistema(user, body) {
+        return await this.clienteService.atualizarClienteSistema(user, body);
     }
-    async listarTodos(user, response) {
-        try {
-            const result = await this.clienteService.listarUsuariosSistema(user);
-            response.send(result);
-        }
-        catch (error) {
-            console.error("Erro ao buscar usuários no sistema:", error);
-            response.status(common_1.HttpStatus.INTERNAL_SERVER_ERROR).send({
-                message: "Erro ao buscar usuários no sistema"
-            });
-        }
+    async listarTodos(user) {
+        return await this.clienteService.listarUsuariosSistema(user);
     }
     async getSingleCliente(user, response, query) {
-        console.log(query);
         try {
             const result = await this.clienteService.getSingleUsuariosSistema(user, query.id_hash);
             response.send(result);
@@ -85,31 +60,34 @@ let ClienteController = class ClienteController {
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseFilters)(new exception_filter_1.HttpExceptionFilter()),
+    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
     __param(0, (0, currentUser_1.CurrentUser)()),
-    __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.UsuarioSistema]),
     __metadata("design:returntype", Promise)
 ], ClienteController.prototype, "criarUsuarioSistema", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.UseFilters)(new exception_filter_1.HttpExceptionFilter()),
     (0, common_1.Put)(),
     __param(0, (0, currentUser_1.CurrentUser)()),
-    __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, types_1.UsuarioSistema]),
     __metadata("design:returntype", Promise)
 ], ClienteController.prototype, "atualizarUsuarioSistema", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseFilters)(new exception_filter_1.HttpExceptionFilter()),
     (0, common_1.Get)(),
     __param(0, (0, currentUser_1.CurrentUser)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ClienteController.prototype, "listarTodos", null);
 __decorate([
@@ -119,21 +97,24 @@ __decorate([
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, types_1.UsuarioSistemaQuery]),
     __metadata("design:returntype", Promise)
 ], ClienteController.prototype, "getSingleCliente", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseFilters)(new exception_filter_1.HttpExceptionFilter()),
     (0, common_1.Delete)(),
     __param(0, (0, currentUser_1.CurrentUser)()),
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, types_1.UsuarioSistemaQuery]),
     __metadata("design:returntype", Promise)
 ], ClienteController.prototype, "deleteUsuarioSistema", null);
 ClienteController = __decorate([
     (0, common_1.Controller)("clientes"),
+    (0, swagger_1.ApiTags)('Clientes'),
     __metadata("design:paramtypes", [cliente_service_1.ClienteService])
 ], ClienteController);
 exports.ClienteController = ClienteController;

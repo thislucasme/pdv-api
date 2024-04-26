@@ -6,7 +6,7 @@ import { AuthRequest } from './models/AuthRequest';
 import { Knex } from 'knex';
 import { ApiTags } from '@nestjs/swagger';
 import { UsuarioLogin, UsuarioTDO } from 'src/tdo/usuarioDTO';
-
+import * as jwt from 'jsonwebtoken'; 
 @Controller()
 @ApiTags('login')
 export class AuthController {
@@ -21,5 +21,13 @@ export class AuthController {
 	login(@Request() user: UsuarioLogin) {
 		return this.authService.login(user);
 
+	}
+	// Rota para descriptografar e mostrar o conteúdo do token JWT
+	@Get("decrypt-token")
+	@IsPublic()
+	decryptToken(@Request() req) {
+		const token = req.headers.authorization.split(' ')[1]; // Extrair o token do cabeçalho 'Authorization'
+		const decodedToken = jwt.decode(token); // Decodificar o token JWT
+		return decodedToken;
 	}
 }

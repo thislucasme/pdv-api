@@ -20,38 +20,35 @@ export class ClienteService {
       await this.knexConnection('usuarios_sistema')
         .insert(body)
 
-      return { success: true };
+      return body;
     } catch (error) {
       console.error("Erro ao criar usuário pedido:", error);
       throw new InternalServerErrorException("Erro ao criar usuário pedido");
     }
   }
   async atualizarClienteSistema(user: UsuarioBody, body: UsuarioSistema) {
-
-    //delete body.id_hash;
-
-    console.log(body)
     try {
       const userDatabase = await this.userService.findByUser(user.username);
-
+  
       if (!userDatabase) {
         throw new NotFoundException("Usuário não encontrado");
       }
-
-      await this.knexConnection('usuarios_sistema')
+  
+      const numUpdated = await this.knexConnection('usuarios_sistema')
         .where({ id_hash: body.id_hash })
         .update(body);
-
-      return { success: true };
+  
+      if (numUpdated === 0) {
+        throw new NotFoundException("Cliente com o id_hash especificado não encontrado");
+      }
+  
+      return body;
     } catch (error) {
       console.error("Erro ao atualizar usuário no sistema:", error);
-      if (error instanceof NotFoundException) {
-        throw error;
-      } else {
-        throw new InternalServerErrorException("Erro ao atualizar usuário no sistema");
-      }
+      throw error; // Lança a exceção para ser tratada por um manipulador global de exceções
     }
   }
+  
   async deletarUsuarioSistema(user: UsuarioBody, id_hash: string) {
     try {
       const userDatabase = await this.userService.findByUser(user.username);
@@ -60,9 +57,13 @@ export class ClienteService {
         throw new NotFoundException("Usuário não encontrado");
       }
 
-      await this.knexConnection('usuarios_sistema')
+      const numUpdated = await this.knexConnection('usuarios_sistema')
         .where({ id_hash: id_hash })
         .del();
+      
+        if (numUpdated === 0) {
+          throw new NotFoundException("Cliente com o id_hash especificado não encontrado");
+        }
 
       return { success: true };
     } catch (error) {

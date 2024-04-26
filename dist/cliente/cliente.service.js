@@ -29,7 +29,7 @@ let ClienteService = class ClienteService {
             body.id_hash = uuidv4();
             await this.knexConnection('usuarios_sistema')
                 .insert(body);
-            return { success: true };
+            return body;
         }
         catch (error) {
             console.error("Erro ao criar usuário pedido:", error);
@@ -37,25 +37,22 @@ let ClienteService = class ClienteService {
         }
     }
     async atualizarClienteSistema(user, body) {
-        console.log(body);
         try {
             const userDatabase = await this.userService.findByUser(user.username);
             if (!userDatabase) {
                 throw new common_1.NotFoundException("Usuário não encontrado");
             }
-            await this.knexConnection('usuarios_sistema')
+            const numUpdated = await this.knexConnection('usuarios_sistema')
                 .where({ id_hash: body.id_hash })
                 .update(body);
-            return { success: true };
+            if (numUpdated === 0) {
+                throw new common_1.NotFoundException("Cliente com o id_hash especificado não encontrado");
+            }
+            return body;
         }
         catch (error) {
             console.error("Erro ao atualizar usuário no sistema:", error);
-            if (error instanceof common_1.NotFoundException) {
-                throw error;
-            }
-            else {
-                throw new common_1.InternalServerErrorException("Erro ao atualizar usuário no sistema");
-            }
+            throw error;
         }
     }
     async deletarUsuarioSistema(user, id_hash) {
@@ -64,9 +61,12 @@ let ClienteService = class ClienteService {
             if (!userDatabase) {
                 throw new common_1.NotFoundException("Usuário não encontrado");
             }
-            await this.knexConnection('usuarios_sistema')
+            const numUpdated = await this.knexConnection('usuarios_sistema')
                 .where({ id_hash: id_hash })
                 .del();
+            if (numUpdated === 0) {
+                throw new common_1.NotFoundException("Cliente com o id_hash especificado não encontrado");
+            }
             return { success: true };
         }
         catch (error) {

@@ -96,17 +96,17 @@ export interface QueryPaginationPedido {
     codigoBarras: string;
     uuid?: string;
 }
-export interface UsuarioSistema {
-    usuario_uuid: string;
-    id_hash?: string | null;
-    nome?: string | null;
-    cpf?: string | null;
-    email?: string | null;
-    telefone?: string | null;
-    data_nascimento?: string | null;
-    rg_ie?: string | null;
-    observacao?: string | null;
+export declare class UsuarioSistema {
+    usuario_uuid: string | null;
+    id_hash: string | null;
+    nome: string | null;
+    cpf: string | null;
+    email: string | null;
+    telefone: string | null;
+    data_nascimento: string | null;
+    rg_ie: string | null;
+    observacao: string | null;
 }
-export interface UsuarioSistemaQuery {
+export declare class UsuarioSistemaQuery {
     id_hash: string;
 }

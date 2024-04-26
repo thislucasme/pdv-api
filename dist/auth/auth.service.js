@@ -19,11 +19,12 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
     }
     login(user) {
+        console.log(user.user);
         const payload = {
-            sub: user.id,
-            email: user.email,
-            name: user.name,
-            uuid: user.uuid
+            sub: user.user.id,
+            email: user.user.email,
+            name: user.user.name,
+            uuid: user.user.uuid
         };
         const jwtToken = this.jwtService.sign(payload);
         return {

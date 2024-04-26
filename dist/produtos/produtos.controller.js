@@ -23,8 +23,9 @@ let ProdutosController = class ProdutosController {
         this.produtosService = produtosService;
     }
     async pagination(user, query, response) {
+        console.log(user);
+        console.log("===========");
         const result = await this.produtosService.getProducts(user, query);
-        console.log(result);
         try {
             const result = await this.produtosService.getProducts(user, query);
             if ((result === null || result === void 0 ? void 0 : result.data.length) === 0) {
@@ -34,6 +35,7 @@ let ProdutosController = class ProdutosController {
                 page: result.page,
                 total: result.total,
             };
+            response.setHeader('Custom-Header', JSON.stringify(customData));
             response.send(result.data);
         }
         catch (e) {

@@ -15,10 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+const is_public_decorator_1 = require("./decorators/is-public.decorator");
 const local_auth_guard_1 = require("./guards/local-auth.guard");
 const knex_1 = require("knex");
 const swagger_1 = require("@nestjs/swagger");
 const usuarioDTO_1 = require("../tdo/usuarioDTO");
+const jwt = require("jsonwebtoken");
 let AuthController = class AuthController {
     constructor(authService, knexConnection) {
         this.authService = authService;
@@ -26,6 +28,11 @@ let AuthController = class AuthController {
     }
     login(user) {
         return this.authService.login(user);
+    }
+    decryptToken(req) {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.decode(token);
+        return decodedToken;
     }
 };
 __decorate([
@@ -37,6 +44,14 @@ __decorate([
     __metadata("design:paramtypes", [usuarioDTO_1.UsuarioLogin]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)("decrypt-token"),
+    (0, is_public_decorator_1.IsPublic)(),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "decryptToken", null);
 AuthController = __decorate([
     (0, common_1.Controller)(),
     (0, swagger_1.ApiTags)('login'),
