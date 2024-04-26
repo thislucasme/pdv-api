@@ -8,6 +8,6 @@ export declare class ClienteController {
     criarUsuarioSistema(user: UsuarioBody, body: UsuarioSistema): Promise<UsuarioSistema>;
     atualizarUsuarioSistema(user: UsuarioBody, body: UsuarioSistema): Promise<UsuarioSistema>;
     listarTodos(user: UsuarioBody): Promise<UsuarioSistema[]>;
-    getSingleCliente(user: UsuarioBody, response: Response, query: UsuarioSistemaQuery): Promise<void>;
+    getSingleCliente(user: UsuarioBody, query: UsuarioSistemaQuery): Promise<UsuarioSistema>;
     deleteUsuarioSistema(user: UsuarioBody, response: Response, query: UsuarioSistemaQuery): Promise<void>;
 }

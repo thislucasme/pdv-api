@@ -33,17 +33,8 @@ let ClienteController = class ClienteController {
     async listarTodos(user) {
         return await this.clienteService.listarUsuariosSistema(user);
     }
-    async getSingleCliente(user, response, query) {
-        try {
-            const result = await this.clienteService.getSingleUsuariosSistema(user, query.id_hash);
-            response.send(result);
-        }
-        catch (error) {
-            console.error("Erro ao buscar usuario no sistema:", error);
-            response.status(common_1.HttpStatus.INTERNAL_SERVER_ERROR).send({
-                message: "Erro ao buscar usuario no sistema"
-            });
-        }
+    async getSingleCliente(user, query) {
+        return await this.clienteService.getSingleUsuariosSistema(user, query.id_hash);
     }
     async deleteUsuarioSistema(user, response, query) {
         try {
@@ -92,12 +83,13 @@ __decorate([
 ], ClienteController.prototype, "listarTodos", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseFilters)(new exception_filter_1.HttpExceptionFilter()),
     (0, common_1.Get)('cliente'),
     __param(0, (0, currentUser_1.CurrentUser)()),
-    __param(1, (0, common_1.Res)()),
-    __param(2, (0, common_1.Query)()),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, types_1.UsuarioSistemaQuery]),
+    __metadata("design:paramtypes", [Object, types_1.UsuarioSistemaQuery]),
     __metadata("design:returntype", Promise)
 ], ClienteController.prototype, "getSingleCliente", null);
 __decorate([
